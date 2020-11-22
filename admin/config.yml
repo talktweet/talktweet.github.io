@@ -1,0 +1,425 @@
+backend:
+  name: git-gateway
+  branch: master # Branch to update (optional; defaults to master)
+  preview_context: Netlify
+site_url: https://talktweet.netlify.app
+publish_mode: editorial_workflow
+media_folder: "src/data/images"
+public_folder: "../images"
+collections:
+  - name: blogs
+    label: Blogs
+    folder: "src/data/blogs"
+    create: true
+    slug: "{{slug}}"
+    preview_path: "{{slug}}"
+    view_groups:
+      - label: Drafts
+        field: draft
+      - label: Categories
+        field: category
+      - label: Tags
+        field: tags
+      - label: Month
+        field: date
+        pattern: \d{4}-\d{2}
+      - label: Year
+        field: date
+        pattern: \d{4}
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Draft
+        name: draft
+        widget: boolean
+        default: true
+      - label: Featured
+        name: is_featured
+        widget: boolean
+        default: false
+      - label: Publish Date
+        name: date
+        widget: datetime
+        date_format: 'YYYY-MM-DD'
+        time_format: 'hh:mm:ss'
+        format: 'YYYY-MM-DD hh:mm:ss'
+      - label: Author
+        name: author
+        widget: "select"
+        default: "Kartik Jhakal"
+        options:
+          - Kartik Jhakal
+      - label: Format
+        name: format
+        widget: "select"
+        default: "image"
+        options:
+          - { label: "Image", value: "image" }
+          - { label: "Gallery", value: "gallery" }
+          - { label: "Quote", value: "quote" }
+          - { label: "Link", value: "link" }
+          - { label: "Video", value: "video" }
+      - label: Link
+        name: link
+        required: false
+        widget: string
+      - label: Image
+        name: image
+        required: false
+        widget: image
+        allow_multiple: false
+      - label: Images
+        name: images
+        required: false
+        widget: list
+        field:
+          label: Image
+          name: image
+          widget: image
+      - label: Video Link
+        name: video_link
+        required: false
+        widget: string
+      - label: Quote Text
+        name: quote_text
+        required: false
+        widget: text
+      - label: Quote Author
+        name: quote_author
+        required: false
+        widget: string
+      - label: Category
+        name: category
+        widget: string
+      - label: Tags
+        name: tags
+        widget: list
+      - label: Body
+        name: body
+        widget: markdown
+
+  - name: authors
+    label: Authors
+    folder: "src/data/authors"
+    extension: json
+    format: json
+    create: true
+    identifier_field: name
+    slug: "{{slug}}"
+    preview_path: "author/{{slug}}"
+    fields:
+      - name: name
+        label: Full Name
+        widget: string
+      - name: image
+        label: Avatar
+        widget: image
+      - name: tagline
+        label: Tagline
+        widget: string
+      - name: bio
+        label: Bio
+        widget: text
+      - name: social
+        label: Social Links
+        widget: object
+        fields:
+        - name: facebook
+          label: Facebook
+          widget: string
+        - name: twitter
+          label: Twitter
+          widget: string
+        - name: instagram
+          label: Instagram
+          widget: string
+        - name: linkedin
+          label: Linkedin
+          widget: string
+        - name: youtube
+          label: Youtube
+          widget: string
+
+  - name: settings
+    label: Settings
+    editor:
+      preview: false
+    files:
+    - name: config
+      label: Config
+      file: src/data/configs/config.json
+      fields:
+      - name: menu
+        label: Menu
+        widget: list
+        fields:
+        - name: title
+          label: Title
+          widget: string
+        - name: path
+          label: Path
+          widget: string
+    - name: theme
+      label: Theme
+      file: src/data/theme.json
+      fields:
+      - name: colors
+        label: Colors
+        widget: object
+        fields:
+        - name: bgColor
+          label: bgColor
+          widget: color
+          allowInput: true
+          default: "#FFFFFF"
+        - name: themeColor
+          label: themeColor
+          widget: color
+          allowInput: true
+          default: "#ff8686"
+        - name: textColor
+          label: textColor
+          widget: color
+          allowInput: true
+          default: "#090606"
+        - name: headingColor
+          label: headingColor
+          widget: color
+          allowInput: true
+          default: "#090606"
+        - name: borderColor
+          label: borderColor
+          widget: color
+          allowInput: true
+          default: "#e3e7e8b3"
+        - name: secondaryColor
+          label: secondaryColor
+          widget: color
+          allowInput: true
+          default: "#0e1b47"
+        - name: hoverColor
+          label: hoverColor
+          widget: color
+          allowInput: true
+          default: "#f8777c"
+        - name: hoverColorTwo
+          label: hoverColorTwo
+          widget: color
+          allowInput: true
+          default: "#ff4d4d"
+        - name: shark
+          label: shark
+          widget: color
+          allowInput: true
+          default: "#929496"
+        - name: silver
+          label: silver
+          widget: color
+          allowInput: true
+          default: "#ababab"
+        - name: nevada
+          label: nevada
+          widget: color
+          allowInput: true
+          default: "#63696a"
+        - name: white
+          label: white
+          widget: color
+          allowInput: true
+          default: "#ffffff"
+        - name: black
+          label: black
+          widget: color
+          allowInput: true
+          default: "#000000"
+        - name: primary
+          label: primary
+          widget: color
+          allowInput: true
+          default: "#004395"
+        - name: secondary
+          label: secondary
+          widget: color
+          allowInput: true
+          default: "#d2a98e"
+        - name: success
+          label: success
+          widget: color
+          allowInput: true
+          default: "#28a745"
+        - name: info
+          label: info
+          widget: color
+          allowInput: true
+          default: "#17a2b8"
+        - name: warning
+          label: warning
+          widget: color
+          allowInput: true
+          default: "#ffc107"
+        - name: danger
+          label: danger
+          widget: color
+          allowInput: true
+          default: "#dc3545"
+        - name: light
+          label: light
+          widget: color
+          allowInput: true
+          default: "#5D1875"
+      - name: lineHieghts
+        label: Line Heights
+        widget: object
+        fields:
+        - name: text
+          label: text
+          widget: number
+          value_type: float
+          default: 1.714
+        - name: heading
+          label: heading
+          widget: number
+          value_type: float
+          default: 1.857
+      - name: fonts
+        label: Fonts
+        widget: object
+        fields:
+        - name: text
+          label: text
+          widget: select
+          options: ["Montserrat", "Marck Script", "Segoe Script Regular"]
+          default: "Montserrat"
+        - name: heading
+          label: heading
+          widget: select
+          options: ["Montserrat", "Marck Script", "Segoe Script Regular"]
+          default: "Montserrat"
+        - name: marck
+          label: marck
+          widget: select
+          options: ["Montserrat", "Marck Script", "Segoe Script Regular"]
+          default: "Marck Script"
+        - name: segoe
+          label: segoe
+          widget: select
+          options: ["Montserrat", "Marck Script", "Segoe Script Regular"]
+          default: "Segoe Script Regular"
+      - name: fontSizes
+        label: Font Sizes
+        widget: list
+        default: ["10px", "12px", "14px", "16px", "20px", "24px", "32px"]
+      - name: fontWeights
+        label: Font Weights
+        widget: object
+        fields:
+        - name: light
+          label: light
+          type: number
+          value_type: int
+          default: 300
+        - name: regular
+          label: regular
+          type: number
+          value_type: int
+          default: 400
+        - name: medium
+          label: medium
+          type: number
+          value_type: int
+          default: 500
+        - name: semiBold
+          label: semiBold
+          type: number
+          value_type: int
+          default: 600
+        - name: bold
+          label: bold
+          type: number
+          value_type: int
+          default: 700
+      - name: space
+        label: Space
+        widget: list
+        field:
+          name: size
+          label: Size
+          widget: number
+          value_type: int
+        default: [0,4,8,16,32,64]
+      - name: breakpoints
+        label: Breakpoints
+        widget: list
+        default: ["481px", "576px", "768px", "992px", "1200px", "1400px"]
+      - name: transition
+        label: Transition
+        widget: string
+        default: "all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1)"
+
+
+  - name: backup
+    label: Backup
+    folder: "src/backup/blogs"
+    create: false
+    delete: false
+    publish: false
+    slug: "{{slug}}"
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Publish Date
+        name: date
+        widget: datetime
+        date_format: 'YYYY-MM-DD'
+        time_format: 'HH:mm'
+        format: 'YYYY-MM-DD HH:mm'
+      - label: Format
+        name: format
+        widget: "select"
+        default: "image"
+        options:
+          - { label: "Image", value: "image" }
+          - { label: "Gallery", value: "gallery" }
+          - { label: "Quote", value: "quote" }
+          - { label: "Link", value: "link" }
+          - { label: "Video", value: "video" }
+      - label: Link
+        name: link
+        required: false
+        widget: string
+      - label: Image
+        name: image
+        required: false
+        widget: image
+        allow_multiple: false
+      - label: Images
+        name: images
+        required: false
+        widget: list
+        field:
+          label: Image
+          name: image
+          widget: image
+      - label: Video Link
+        name: video_link
+        required: false
+        widget: string
+      - label: Quote Text
+        name: quote_text
+        required: false
+        widget: text
+      - label: Quote Author
+        name: quote_author
+        required: false
+        widget: string
+      - label: Category
+        name: category
+        widget: string
+      - label: Tags
+        name: tags
+        widget: list
+      - label: Body
+        name: body
+        widget: markdown
